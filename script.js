@@ -1,20 +1,22 @@
-// script.js
-
 const edamamAppId = '67bb73bd'; // Edamam App ID
 const edamamAppKey = 'a3f1f84da3baadbe2f2d761b40629ab9'; // Edamam App Key
 const searchBtn = document.getElementById('searchBtn');
 const ingredientsInput = document.getElementById('ingredients');
 const recipeResults = document.getElementById('recipeResults');
 
-searchBtn.addEventListener('click', () => {
-    const userIngredients = ingredientsInput.value.toLowerCase(); // Convert input to lowercase
+const searchForm = document.getElementById('searchForm');
+searchForm.addEventListener('submit', event => {
+    event.preventDefault();
+
+    const userIngredients = ingredientsInput.value.toLowerCase();
     let apiUrl;
 
+    // MAY WANT TO REMOVE/CHANGE THIS LATER
     if (userIngredients.includes('vegan')) {
-        // If the input contains "vegan," include health=vegan in the API request
+        // if the input contains "vegan," include health=vegan in the API request
         apiUrl = `https://api.edamam.com/search?q=${userIngredients}&app_id=${edamamAppId}&app_key=${edamamAppKey}&health=vegan`;
     } else {
-        // Otherwise, make a regular API request without the health parameter
+        // otherwise, make a regular API request without the health parameter
         apiUrl = `https://api.edamam.com/search?q=${userIngredients}&app_id=${edamamAppId}&app_key=${edamamAppKey}`;
     }
 
@@ -24,7 +26,7 @@ searchBtn.addEventListener('click', () => {
             if (data.hits.length > 0) {
                 displayRecipes(data.hits);
             } else {
-                // No recipes found, display a message
+                // no recipes found
                 recipeResults.innerHTML = 'No recipes found for the given ingredients.';
             }
         })
@@ -50,4 +52,3 @@ function displayRecipes(recipes) {
         recipeResults.appendChild(recipeCard);
     });
 }
-
