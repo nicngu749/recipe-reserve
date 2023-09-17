@@ -3,21 +3,32 @@ const edamamAppKey = 'a3f1f84da3baadbe2f2d761b40629ab9'; // Edamam App Key
 const searchBtn = document.getElementById('searchBtn');
 const ingredientsInput = document.getElementById('ingredients');
 const recipeResults = document.getElementById('recipeResults');
+const advancedOptions = document.getElementById('advancedOptions'); // New
 
 const searchForm = document.getElementById('searchForm');
 searchForm.addEventListener('submit', event => {
     event.preventDefault();
 
     const userIngredients = ingredientsInput.value.toLowerCase();
-    let apiUrl;
+    let apiUrl = `https://api.edamam.com/search?q=${userIngredients}&app_id=${edamamAppId}&app_key=${edamamAppKey}`;
 
-    // MAY WANT TO REMOVE/CHANGE THIS LATER
-    if (userIngredients.includes('vegan')) {
-        // if the input contains "vegan," include health=vegan in the API request
-        apiUrl = `https://api.edamam.com/search?q=${userIngredients}&app_id=${edamamAppId}&app_key=${edamamAppKey}&health=vegan`;
-    } else {
-        // otherwise, make a regular API request without the health parameter
-        apiUrl = `https://api.edamam.com/search?q=${userIngredients}&app_id=${edamamAppId}&app_key=${edamamAppKey}`;
+    // Check dietary restrictions and add them to the API request if selected
+    const veganCheckbox = document.getElementById('vegan');
+    const vegetarianCheckbox = document.getElementById('vegetarian');
+    const dairyFreeCheckbox = document.getElementById('dairyFree');
+    const glutenFreeCheckbox = document.getElementById('glutenFree');
+
+    if (veganCheckbox.checked) {
+        apiUrl += '&health=vegan';
+    }
+    if (vegetarianCheckbox.checked) {
+        apiUrl += '&health=vegetarian';
+    }
+    if (dairyFreeCheckbox.checked) {
+        apiUrl += '&health=dairy-free';
+    }
+    if (glutenFreeCheckbox.checked) {
+        apiUrl += '&health=gluten-free';
     }
 
     fetch(apiUrl)
@@ -27,7 +38,7 @@ searchForm.addEventListener('submit', event => {
                 displayRecipes(data.hits);
             } else {
                 // no recipes found
-                recipeResults.innerHTML = 'No recipes found for the given ingredients.';
+                recipeResults.innerHTML = 'No recipes found for the given ingredients and dietary restrictions.';
             }
         })
         .catch(error => {
@@ -52,3 +63,14 @@ function displayRecipes(recipes) {
         recipeResults.appendChild(recipeCard);
     });
 }
+
+// Add an event listener to the "Advanced Options" button to toggle its display
+const advancedOptionsBtn = document.getElementById('advancedOptionsBtn');
+
+advancedOptionsBtn.addEventListener('click', () => {
+    if (advancedOptions.style.display === 'none' || advancedOptions.style.display === '') {
+        advancedOptions.style.display = 'block';
+    } else {
+        advancedOptions.style.display = 'none';
+    }
+});
