@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Recipe Reserve - Find recipes with your ingredients</title>
+    <title>Recipe Reserve - Find recipes based on your ingredients</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,12 +10,26 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 </head>
 <body>
-    <h1>Don't feel like running to the market?</h1>
-    <p class="description">Not a problem! Just enter some ingredients — we'll serve up some tasty recipes tailored to what you already have.</p>
+    <h1>Don't feel like making a grocery run?</h1>
+    <p class="description">Not a problem! Just enter some ingredients — we'll serve up some tasty recipes tailored to what you already have. <br> If you're just looking for new recipes to try out, feel free to take a search as well!</p>
     <form id="searchForm">
         <input type="text" id="ingredients" placeholder="Enter some ingredients, e.g. potatoes, garlic, chicken">
         <button type="submit" id="searchBtn">Search</button>
     </form>
+    <button id="advancedOptionsBtn">Advanced Options</button>
+    <div id="advancedOptions" style="display: none;">
+        <label for="vegan">Vegan</label>
+        <input type="checkbox" id="vegan" name="vegan">
+        <br>
+        <label for="vegetarian">Vegetarian</label>
+        <input type="checkbox" id="vegetarian" name="vegetarian">
+        <br>
+        <label for="dairyFree">Dairy-Free</label>
+        <input type="checkbox" id="dairyFree" name="dairyFree">
+        <br>
+        <label for="glutenFree">Gluten-Free</label>
+        <input type="checkbox" id="glutenFree" name="glutenFree">
+    </div>
     <div id="recipeResults">Recipe suggestions will appear here.</div>
     <script src="script.js"></script>
     <footer>
